@@ -101,7 +101,7 @@ Operand Interpreter::getOperand()
     const std::uint8_t pointerMask = (1 << 4);
 
     Operand operand;
-    operand.kind = static_cast<OperandKind>(type & typeMask);
+    operand.type = static_cast<DataType>(type & typeMask);
     operand.pointer = type & pointerMask;
     operand.fromRegister = (type >> 7);
 
@@ -112,24 +112,24 @@ Operand Interpreter::getOperand()
         return operand;
     }
 
-    switch (operand.kind)
+    switch (operand.type)
     {
-        case OperandKind::i8:
-        case OperandKind::u8:
+        case DataType::i8:
+        case DataType::u8:
             operand.value = read<uint8_t>();
             break;
-        case OperandKind::i16:
-        case OperandKind::u16:
+        case DataType::i16:
+        case DataType::u16:
             operand.value = read<uint16_t>();
             break;
-        case OperandKind::i32:
-        case OperandKind::u32:
-        case OperandKind::f32:
+        case DataType::i32:
+        case DataType::u32:
+        case DataType::f32:
             operand.value = read<uint32_t>();
             break;
-        case OperandKind::i64:
-        case OperandKind::u64:
-        case OperandKind::f64:
+        case DataType::i64:
+        case DataType::u64:
+        case DataType::f64:
             operand.value = read<uint64_t>();
             break;
     }

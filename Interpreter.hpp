@@ -14,7 +14,7 @@ struct Metadata
     std::uint32_t entryPoint;
 };
 
-enum class OperandKind
+enum class DataType
 {
     reserved,
     i8, i16, i32, i64,
@@ -24,7 +24,7 @@ enum class OperandKind
 
 struct Operand
 {
-    OperandKind kind;
+    DataType type;
     std::uint64_t value;
     bool fromRegister;
     bool pointer;
