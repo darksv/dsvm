@@ -136,3 +136,23 @@ Operand Interpreter::getOperand()
 
     return operand;
 }
+
+Operand Interpreter::getRegister()
+{
+    auto operand = getOperand();
+
+    if (!operand.fromRegister)
+        std::cerr << "Register expected, got constant." << std::endl;
+
+    return operand;
+}
+
+Operand Interpreter::getConstant()
+{
+    auto operand = getOperand();
+
+    if (operand.fromRegister)
+        std::cerr << "Contstant expected, got register." << std::endl;
+
+    return operand;
+}

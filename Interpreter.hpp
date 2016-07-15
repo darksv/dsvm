@@ -52,6 +52,8 @@ protected:
 
     Opcode getOpcode();
     Operand getOperand();
+    Operand getRegister();
+    Operand getConstant();
 
 private:
     Metadata meta_;
