@@ -1,0 +1,6 @@
+in r0
+mov r1:u16, 123:u16
+add r2, r0, r1
+label:
+out r2
+jmp label
