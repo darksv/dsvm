@@ -37,6 +37,12 @@ struct Operand
         pointer = byte & pointerMask;
         fromRegister = (byte >> 7);
     }
+
+    template <typename T>
+    constexpr T as() const
+    {
+        return *reinterpret_cast<const T*>(&value);
+    }
 };
 
 class Interpreter
