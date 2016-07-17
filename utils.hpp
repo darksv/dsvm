@@ -17,4 +17,5 @@ std::string formatHex(T value)
     return ss.str();
 }
 
+std::string formatDataType(DataType dataType);
 std::string formatOperand(const Operand& operand);

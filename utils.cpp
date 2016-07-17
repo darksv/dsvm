@@ -6,86 +6,83 @@
 #include <string>
 #include "utils.hpp"
 
+std::string formatDataType(DataType dataType)
+{
+    switch (dataType)
+    {
+        case DataType::i8:
+            return "i8";
+        case DataType::i16:
+            return "i16";
+        case DataType::i32:
+            return "i32";
+        case DataType::i64:
+            return "i64";
+        case DataType::u8:
+            return "u8";
+        case DataType::u16:
+            return "u16";
+        case DataType::u32:
+            return "u32";
+        case DataType::u64:
+            return "u64";
+        case DataType::f32:
+            return "f32";
+        case DataType::f64:
+            return "f64";
+    }
+
+    /* If data type is invalid */
+    return "?";
+}
+
 std::string formatOperand(const Operand& operand)
 {
     std::stringstream ss;
 
     if (operand.fromRegister)
     {
-        switch (operand.type)
-        {
-            case DataType::i8:
-                ss << "r" << operand.value << ":" << (operand.pointer ? "*" : "") << "i8";
-                break;
-            case DataType::i16:
-                ss << "r" << operand.value << ":" << (operand.pointer ? "*" : "") << "i16";
-                break;
-            case DataType::i32:
-                ss << "r" << operand.value << ":" << (operand.pointer ? "*" : "") << "i32";
-                break;
-            case DataType::i64:
-                ss << "r" << operand.value << ":" << (operand.pointer ? "*" : "") << "i64";
-                break;
-            case DataType::u8:
-                ss << "r" << operand.value << ":" << (operand.pointer ? "*" : "") << "u8";
-                break;
-            case DataType::u16:
-                ss << "r" << operand.value << ":" << (operand.pointer ? "*" : "") << "u16";
-                break;
-            case DataType::u32:
-                ss << "r" << operand.value << ":" << (operand.pointer ? "*" : "") << "u32";
-                break;
-            case DataType::u64:
-                ss << "r" << operand.value << ":" << (operand.pointer ? "*" : "") << "u64";
-                break;
-            case DataType::f32:
-                ss << "r" << operand.value << ":" << (operand.pointer ? "*" : "") << "f32";
-                break;
-            case DataType::f64:
-                ss << "r" << operand.value << ":" << (operand.pointer ? "*" : "") << "f64";
-                break;
-            default:
-                ss << "?:?";
-        }
+        ss << "r" << operand.value << ":" << (operand.pointer ? "*" : "") << formatDataType(operand.type);
     }
     else
     {
         switch (operand.type)
         {
             case DataType::i8:
-                ss << (operand.fromRegister ? "r" : "") << *reinterpret_cast<const int8_t*>(&operand.value) << ":" << (operand.pointer ? "*" : "") << "i8";
+                ss << operand.as<int8_t>();
                 break;
             case DataType::i16:
-                ss << (operand.fromRegister ? "r" : "") << *reinterpret_cast<const int16_t*>(&operand.value) << ":" << (operand.pointer ? "*" : "") << "i16";
+                ss << operand.as<int16_t>();
                 break;
             case DataType::i32:
-                ss << (operand.fromRegister ? "r" : "") << *reinterpret_cast<const int32_t*>(&operand.value) << ":" << (operand.pointer ? "*" : "") << "i32";
+                ss << operand.as<int32_t>();
                 break;
             case DataType::i64:
-                ss << (operand.fromRegister ? "r" : "") << *reinterpret_cast<const int64_t*>(&operand.value) << ":" << (operand.pointer ? "*" : "") << "i64";
+                ss << operand.as<int64_t>();
                 break;
             case DataType::u8:
-                ss << (operand.fromRegister ? "r" : "") << *reinterpret_cast<const uint8_t*>(&operand.value) << ":" << (operand.pointer ? "*" : "") << "u8";
+                ss << operand.as<uint8_t>();
                 break;
             case DataType::u16:
-                ss << (operand.fromRegister ? "r" : "") << *reinterpret_cast<const uint16_t*>(&operand.value) << ":" << (operand.pointer ? "*" : "") << "u16";
+                ss << operand.as<uint16_t>();
                 break;
             case DataType::u32:
-                ss << (operand.fromRegister ? "r" : "") << *reinterpret_cast<const uint32_t*>(&operand.value) << ":" << (operand.pointer ? "*" : "") << "u32";
+                ss << operand.as<uint32_t>();
                 break;
             case DataType::u64:
-                ss << (operand.fromRegister ? "r" : "") << *reinterpret_cast<const uint64_t*>(&operand.value) << ":" << (operand.pointer ? "*" : "") << "u64";
+                ss << operand.as<uint64_t>();
                 break;
             case DataType::f32:
-                ss << (operand.fromRegister ? "r" : "") << *reinterpret_cast<const float*>(&operand.value) << ":" << (operand.pointer ? "*" : "") << "f32";
+                ss << operand.as<float>();
                 break;
             case DataType::f64:
-                ss << (operand.fromRegister ? "r" : "") << *reinterpret_cast<const double*>(&operand.value) << ":" << (operand.pointer ? "*" : "") << "f64";
+                ss << operand.as<double>();
                 break;
             default:
-                ss << "?:?";
+                ss << "?";
 
         }
+        ss << ":" << (operand.pointer ? "*" : "") << formatDataType(operand.type);
     }
 
     return ss.str();
