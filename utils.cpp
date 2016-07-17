@@ -42,7 +42,7 @@ std::string formatOperand(const Operand& operand)
                 ss << "r" << operand.value << ":" << (operand.pointer ? "*" : "") << "f32";
                 break;
             case DataType::f64:
-                ss << "r"<< operand.value << ":" << (operand.pointer ? "*" : "") << "f64";
+                ss << "r" << operand.value << ":" << (operand.pointer ? "*" : "") << "f64";
                 break;
             default:
                 ss << "?:?";
