@@ -96,14 +96,7 @@ Opcode Interpreter::getOpcode()
 
 Operand Interpreter::getOperand()
 {
-    const auto type = read<uint8_t>();
-    const std::uint8_t typeMask = 0x0F;
-    const std::uint8_t pointerMask = (1 << 4);
-
-    Operand operand;
-    operand.type = static_cast<DataType>(type & typeMask);
-    operand.pointer = type & pointerMask;
-    operand.fromRegister = (type >> 7);
+    Operand operand{read<uint8_t>()};
 
     /* Read register number */
     if (operand.fromRegister)

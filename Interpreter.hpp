@@ -16,8 +16,7 @@ struct Metadata
 
 enum class DataType
 {
-    reserved,
-    i8, i16, i32, i64,
+    i8 = 0x01, i16, i32, i64,
     u8, u16, u32, u64,
     f32, f64
 };
@@ -28,6 +27,16 @@ struct Operand
     std::uint64_t value;
     bool fromRegister;
     bool pointer;
+
+    Operand(uint8_t byte)
+    {
+        const std::uint8_t typeMask = 0x0F;
+        const std::uint8_t pointerMask = (1 << 4);
+
+        type = static_cast<DataType>(byte & typeMask);
+        pointer = byte & pointerMask;
+        fromRegister = (byte >> 7);
+    }
 };
 
 class Interpreter
