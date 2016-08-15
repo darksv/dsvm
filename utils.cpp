@@ -36,6 +36,11 @@ std::string formatDataType(DataType dataType)
     return "?";
 }
 
+std::string formatOpcode(Opcode opcode)
+{
+    return OPCODES[opcode].mnemonics;
+}
+
 std::string formatOperand(const Operand& operand)
 {
     std::stringstream ss;
@@ -49,34 +54,34 @@ std::string formatOperand(const Operand& operand)
         switch (operand.type)
         {
             case DataType::i8:
-                ss << operand.as<int8_t>();
+                ss << operandAs<int8_t>(operand);
                 break;
             case DataType::i16:
-                ss << operand.as<int16_t>();
+                ss << operandAs<int16_t>(operand);
                 break;
             case DataType::i32:
-                ss << operand.as<int32_t>();
+                ss << operandAs<int32_t>(operand);
                 break;
             case DataType::i64:
-                ss << operand.as<int64_t>();
+                ss << operandAs<int64_t>(operand);
                 break;
             case DataType::u8:
-                ss << operand.as<uint8_t>();
+                ss << operandAs<uint8_t>(operand);
                 break;
             case DataType::u16:
-                ss << operand.as<uint16_t>();
+                ss << operandAs<uint16_t>(operand);
                 break;
             case DataType::u32:
-                ss << operand.as<uint32_t>();
+                ss << operandAs<uint32_t>(operand);
                 break;
             case DataType::u64:
-                ss << operand.as<uint64_t>();
+                ss << operandAs<uint64_t>(operand);
                 break;
             case DataType::f32:
-                ss << operand.as<float>();
+                ss << operandAs<float>(operand);
                 break;
             case DataType::f64:
-                ss << operand.as<double>();
+                ss << operandAs<double>(operand);
                 break;
             default:
                 ss << "?";
@@ -86,4 +91,17 @@ std::string formatOperand(const Operand& operand)
     }
 
     return ss.str();
+}
+
+Operand makeOperand(uint8_t byte)
+{
+    const std::uint8_t typeMask = 0x0F;
+    const std::uint8_t pointerMask = (1 << 4);
+
+    return {
+            .type = static_cast<DataType>(byte & typeMask),
+            .value = 0,
+            .fromRegister = (byte >> 7),
+            .pointer = byte & pointerMask
+    };
 }

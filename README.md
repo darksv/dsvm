@@ -12,7 +12,6 @@ Bytecode
 | 0x02 | add  | add *dst*, *e1*, *e2* | store sum of *e1* and *e2* in *dst*   |
 | 0x03 | out  | out *src*             | write value from *src* to stdout      |
 | 0x04 | jmp  | jmp *addr*            | jump to *addr*                        |
-| 0x05 | jif  |
 | 0xFF | nop  | nop                   | do nothing                            |
 
 ### Operands
@@ -61,6 +60,7 @@ out r0:f32
 | floating | 12.34   |
 
 #### TODOs
+- [x] implement disassebler
 - [ ] implement interpreter
 - [ ] rewrite compiler from Python to C++
 - [ ] add more instructions

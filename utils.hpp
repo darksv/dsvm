@@ -6,7 +6,7 @@
 
 #include <iomanip>
 #include <string>
-#include "Interpreter.hpp"
+#include "Fetcher.hpp"
 
 template<typename T>
 std::string formatHex(T value)
@@ -18,4 +18,13 @@ std::string formatHex(T value)
 }
 
 std::string formatDataType(DataType dataType);
+std::string formatOpcode(Opcode opcode);
 std::string formatOperand(const Operand& operand);
+
+Operand makeOperand(uint8_t byte);
+
+template <typename T>
+constexpr T operandAs(const Operand& operand)
+{
+    return *reinterpret_cast<const T*>(&operand.value);
+}
